@@ -23,7 +23,11 @@ public class Gun : NetworkBehaviour
     [ServerRpc]
     private void TestServerRpc()
     {
-        GameObject spawnedBullet = Instantiate(bullet, head.transform.position, head.transform.rotation);
-        spawnedBullet.GetComponent<NetworkObject>().Spawn();
+        GameObject spawnedBullet = Instantiate(bullet, head.transform.position + (1.2f * head.transform.forward), head.transform.rotation);
+
+        ServerRpcParams serverRpcParams = default;
+        var clientId = serverRpcParams.Receive.SenderClientId;
+
+        spawnedBullet.GetComponent<NetworkObject>().SpawnWithOwnership(clientId, true);
     }
 }

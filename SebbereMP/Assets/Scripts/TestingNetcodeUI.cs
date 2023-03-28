@@ -15,9 +15,6 @@ using UnityEngine.UI;
 
 public class TestingNetcodeUI : MonoBehaviour
 {
-    [SerializeField] private Button hostButton;
-    [SerializeField] private Button clientButton;
-    [SerializeField] private TMP_InputField code;
     string joinCode;    
     private async void Awake()
     {

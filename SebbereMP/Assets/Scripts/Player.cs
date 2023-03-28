@@ -26,6 +26,7 @@ public class Player : NetworkBehaviour
     Vector3 moveDir = new Vector3();
     Vector3 lookDir = new Vector3();
     Vector3 oldLookDir = new Vector3();
+    Vector3 spawnPos = new Vector3(0, 100, 0);
     bool stopInput;
 
     void Awake()
@@ -79,9 +80,16 @@ public class Player : NetworkBehaviour
             rb.AddForce(((transform.right * moveDir.x) + (transform.forward * moveDir.z)) * airMultiplier * 8000 * Time.deltaTime);
             rb.AddForce(-transform.up * gravityForce * Time.deltaTime);
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Bullet")
+        {
+            Debug.Log("fart");
 
-
+            gameObject.transform.position = spawnPos;
+        }
     }
 
     private void SpeedControl()
@@ -152,4 +160,5 @@ public class Player : NetworkBehaviour
 
         playerInput.enabled = true;
     }
+
 }
