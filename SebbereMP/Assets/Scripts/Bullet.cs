@@ -6,30 +6,25 @@ public class Bullet : NetworkBehaviour
 {
     [SerializeField] float bulletPower;
     [SerializeField] float bulletLifeTime;
+    [SerializeField] float chargeUpTime;
     Rigidbody rb;
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
-
-        rb.AddForce(transform.forward * bulletPower);
-        StartCoroutine(BulletLifeTime());
+        if (!IsOwner) return;
+        StartCoroutine(ChargeUpTime());
+        StartCoroutine(TimeToExplode());
 
     }
 
-    private IEnumerator BulletLifeTime()
+
+    private IEnumerator ChargeUpTime()
+    {
+        yield return new WaitForSeconds(chargeUpTime);
+        gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 1800);
+    }
+    private IEnumerator TimeToExplode()
     {
         yield return new WaitForSeconds(bulletLifeTime);
         Destroy(gameObject);
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.tag == "Player" || other.gameObject.tag == "Wall")
-    //    {
-    //        if(gameObject != null)
-    //        {
-    //            Destroy(gameObject);
-    //        }
-    //    }
-    //}
 }

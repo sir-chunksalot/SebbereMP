@@ -1587,7 +1587,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 7604066371862499450, guid: 49a94f1292f0e9e4a96efb8038d1c873, type: 3}
+  bulletLocal: {fileID: 7604066371862499450, guid: a35fddb859c8a2c41ba882a9eba1996a, type: 3}
   head: {fileID: 7940028646988808559}
+  player: {fileID: 4277175109720815279}
 --- !u!114 &472949034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1849,6 +1851,18 @@ MonoBehaviour:
       - m_Target: {fileID: 5103560126878613946}
         m_TargetAssemblyTypeName: Gun, Assembly-CSharp
         m_MethodName: Fire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4277175109720815269}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: BlastBack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

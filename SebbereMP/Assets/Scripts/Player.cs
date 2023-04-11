@@ -152,6 +152,11 @@ public class Player : NetworkBehaviour
 
         }
     }
+
+    public void BlastBack(InputAction.CallbackContext context)
+    {
+        //rb.AddForce((transform.forward * -1) * 500);
+    }
     public override void OnNetworkSpawn() //this was to fix a weird ass bug where clients couldnt move 
     {
         base.OnNetworkSpawn();
