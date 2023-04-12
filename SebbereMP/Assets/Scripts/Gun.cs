@@ -4,12 +4,12 @@ using System.Security.Cryptography;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Networking.Types;
 using UnityEngine.UIElements;
 
 public class Gun : NetworkBehaviour
 {
     [SerializeField] GameObject bullet;
-    [SerializeField] GameObject bulletLocal;
     [SerializeField] GameObject head;
     [SerializeField] GameObject player;
 
@@ -18,34 +18,27 @@ public class Gun : NetworkBehaviour
     {
         if (context.performed)
         {
-            //Instantiate(bullet, head.transform.position + (1.2f * head.transform.forward), head.transform.rotation);
-            player.GetComponent<Rigidbody>().AddForce((transform.forward * -1) * 500);
-            ShootServerRpc((head.transform.position + (1.2f * head.transform.forward)) , head.transform.rotation);
+            player.GetComponent<Rigidbody>().AddForce((transform.forward * -1) * 500); //pushes player back
+            float spawnTime = Time.fixedTime;
+            ShootServerRpc(head.transform.position + (1.2f * head.transform.forward) , head.transform.rotation, spawnTime);
+            Debug.Log("gun owner client id is: " + OwnerClientId);
         }
     }
 
     [ServerRpc]
-    private void ShootServerRpc(UnityEngine.Vector3 spawnPos, UnityEngine.Quaternion rot) //i had to do this unity engine bullshit to clarify which one i was talking about. lil unity got confused uwu
+    private void ShootServerRpc(UnityEngine.Vector3 spawnPos, UnityEngine.Quaternion rot, float spawnTime) //i had to do this unity engine bullshit to clarify which one i was talking about. lil unity got confused uwu
     {
-        GameObject shot = Instantiate(bullet, spawnPos + (transform.forward * 2), rot);
+        GameObject shot = Instantiate(bullet, spawnPos, rot);
 
         ServerRpcParams serverRpcParams = default;
         var clientId = serverRpcParams.Receive.SenderClientId;
 
+ 
+
+        
+
         shot.GetComponent<NetworkObject>().Spawn();
-        
-        
+        shot.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
     }
 
-    [ClientRpc] 
-
-    private void ShootClientRPC()
-    {
-        if(!IsOwner)
-        {
-            Debug.Log("jizz");
-        }
-
-        Debug.Log("cum");
-    }
 }

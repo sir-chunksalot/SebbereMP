@@ -84,7 +84,7 @@ public class Player : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Bullet")
+        if (other.gameObject.tag == "Explosion")
         {
             Debug.Log("fart");
 
@@ -153,10 +153,6 @@ public class Player : NetworkBehaviour
         }
     }
 
-    public void BlastBack(InputAction.CallbackContext context)
-    {
-        //rb.AddForce((transform.forward * -1) * 500);
-    }
     public override void OnNetworkSpawn() //this was to fix a weird ass bug where clients couldnt move 
     {
         base.OnNetworkSpawn();

@@ -15,8 +15,6 @@ public class PauseMenuUI : MonoBehaviour
 
     private void Awake()
     {
-       
-
         sensSlider = sensSliderObject.GetComponent<Slider>();
         sensText = sensTextObject.GetComponent<TMP_InputField>();
 
