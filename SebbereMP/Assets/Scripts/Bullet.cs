@@ -40,7 +40,7 @@ public class Bullet : NetworkBehaviour
     private IEnumerator TimeToExplode()
     {
         yield return new WaitForSeconds(bulletLifeTime);
-        Destroy(gameObject);
+        DestroyGameObjectServerRPC();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,6 +61,13 @@ public class Bullet : NetworkBehaviour
 
         shot.GetComponent<NetworkObject>().Spawn();
 
-        Destroy(gameObject); //destroys bullet after explosion is spawned
+        //destroys bullet after explosion is spawned
+        DestroyGameObjectServerRPC();
+    }
+
+    [ServerRpc]
+    private void DestroyGameObjectServerRPC()
+    {
+        Destroy(gameObject);
     }
 }

@@ -145,7 +145,7 @@ public class Player : NetworkBehaviour
             oldLookDir = oldLookDir + new Vector3(lookDir.x, lookDir.y, lookDir.z);
             gameObject.transform.rotation = Quaternion.Euler(0, oldLookDir.x * sensitivity, oldLookDir.z * sensitivity); //this rotates the characters x and z posistions 
 
-            if (!(oldLookDir.y * -1 * sensitivity > 80 || oldLookDir.y * -1 * sensitivity < -80))
+            if (!(oldLookDir.y * -1 * sensitivity > 90 || oldLookDir.y * -1 * sensitivity < -90))
             {
                 head.transform.rotation = Quaternion.Euler(oldLookDir.y * -1 * sensitivity, oldLookDir.x * sensitivity, oldLookDir.z * sensitivity); //this rotates the cameras y, this is so the Y look direction has no affect on move direction 
             }
