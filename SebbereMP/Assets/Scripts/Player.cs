@@ -23,6 +23,7 @@ public class Player : NetworkBehaviour
 
     Rigidbody rb = new Rigidbody();
     PlayerInput playerInput;
+    MagazineUI magazineUI;
     Vector3 moveDir = new Vector3();
     Vector3 lookDir = new Vector3();
     Vector3 oldLookDir = new Vector3();
