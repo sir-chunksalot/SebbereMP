@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System.Collections;
 using System.Numerics;
 using System.Security.Cryptography;
 using TMPro;
@@ -17,6 +18,7 @@ public class Gun : NetworkBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject magazine;
     [SerializeField] int maxAmmo;
+    [SerializeField] int reloadTime;
 
     private GameObject target;
     private TextMeshProUGUI text;
@@ -43,9 +45,21 @@ public class Gun : NetworkBehaviour
         }
     }
 
+    public void Reload(InputAction.CallbackContext context)
+    {
+        StartCoroutine(ReloadWait());
+    }
+
     private void SetUIAmmo(int num)
     {
         text.text = num.ToString();
+    }
+
+    private IEnumerator ReloadWait()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        ammo = maxAmmo;
+        SetUIAmmo(ammo);
     }
 
     [ServerRpc]

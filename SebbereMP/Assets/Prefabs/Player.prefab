@@ -1318,6 +1318,7 @@ GameObject:
   - component: {fileID: 1273327519}
   - component: {fileID: 1273327518}
   - component: {fileID: 1273327517}
+  - component: {fileID: 8517615561703263629}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -1408,6 +1409,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8517615561703263629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273327515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ccc7be32a61684fa06f32fff2970d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1283102336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,6 +1773,7 @@ GameObject:
   - component: {fileID: 1989665053009134366}
   - component: {fileID: 9217860484013083367}
   - component: {fileID: 7276073476870367092}
+  - component: {fileID: 1600812350}
   m_Layer: 11
   m_Name: Eyes
   m_TagString: MainCamera
@@ -1834,6 +1848,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284221288697723469}
   m_Enabled: 0
+--- !u!114 &1600812350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284221288697723469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 754bc3acc273fdc42ac8e1479fd9df62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4041830452587635722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,6 +1976,7 @@ MonoBehaviour:
   player: {fileID: 4277175109720815279}
   magazine: {fileID: 5235427223343228443}
   maxAmmo: 3
+  reloadTime: 1
 --- !u!114 &472949034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2311,6 +2338,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 25e7acbc-ba77-461b-90f9-7170d77725de
     m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5103560126878613946}
+        m_TargetAssemblyTypeName: Gun, Assembly-CSharp
+        m_MethodName: Reload
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 24e0f35d-10cd-4af2-accc-0f75a1e7e88a
+    m_ActionName: Player/Reload[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

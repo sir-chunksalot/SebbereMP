@@ -1,16 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
 
-public class Viewpoint : NetworkBehaviour
+public class DisableDupe : NetworkBehaviour
 {
-
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
 
         if (!IsOwner)
         {
-            gameObject.GetComponent<Camera>().enabled = false;
+            gameObject.SetActive(false);
         }
 
     }
