@@ -35,7 +35,7 @@ public class Gun : NetworkBehaviour
     {
         if (context.performed && ammo > 0)
         {
-            player.GetComponent<Rigidbody>().AddForce((transform.forward * -1) * 500); //pushes player back
+            player.GetComponent<Rigidbody>().AddForce((transform.right) * 500); //pushes player back
             float spawnTime = Time.fixedTime;
             ShootServerRpc(head.transform.position + (1.2f * head.transform.forward) , head.transform.rotation, spawnTime);
             Debug.Log("gun owner client id is: " + OwnerClientId);
@@ -69,10 +69,6 @@ public class Gun : NetworkBehaviour
 
         ServerRpcParams serverRpcParams = default;
         var clientId = serverRpcParams.Receive.SenderClientId;
-
- 
-
-        
 
         shot.GetComponent<NetworkObject>().Spawn();
         shot.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);

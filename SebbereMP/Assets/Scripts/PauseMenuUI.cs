@@ -13,7 +13,7 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private GameObject player;
     private Player playerScript;
 
-    private void Awake()
+    private void Start()
     {
         sensSlider = sensSliderObject.GetComponent<Slider>();
         sensText = sensTextObject.GetComponent<TMP_InputField>();

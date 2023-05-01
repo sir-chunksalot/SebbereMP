@@ -11,6 +11,7 @@ public class Player : NetworkBehaviour
     [SerializeField] private float gravityForce;
     [SerializeField] private float sensitivity;
     [SerializeField] private GameObject head;
+    [SerializeField] private GameObject gun;
     [SerializeField] private GameObject pauseMenu;
 
     //ground check
@@ -29,6 +30,7 @@ public class Player : NetworkBehaviour
     Vector3 oldLookDir = new Vector3();
     Vector3 spawnPos = new Vector3(0, 100, 0);
     bool stopInput;
+    bool stopMovement;
 
     void Awake()
     {
@@ -41,6 +43,7 @@ public class Player : NetworkBehaviour
     }
     private void Update()
     {
+        if (stopMovement) return;
         SpeedControl();
         //grounded = Physics.Raycast(transform.position, Vector3.down, (playerHeight * .5f) + .2f, groundLayermask);
         Collider[] collider = Physics.OverlapSphere(groundCheck.gameObject.transform.position, groundCheckRadius, groundLayermask);
@@ -50,7 +53,7 @@ public class Player : NetworkBehaviour
         else {
             grounded = false;
         }
-        if (grounded)
+        if (grounded) //sets friction when we arent in the air
         {
             rb.drag = groundDrag;
         }
@@ -59,6 +62,11 @@ public class Player : NetworkBehaviour
             rb.drag = 0;
         }
 
+    }
+
+    public void SetStopMovement(bool x)
+    {
+        stopMovement = x;
     }
 
     public void SetSensitivity(float newSens)
@@ -72,11 +80,12 @@ public class Player : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        if (grounded)
+        if (stopMovement) return;
+        if (grounded) //movement
         {
             rb.AddForce(((transform.right * moveDir.x) + (transform.forward * moveDir.z)) * 8000 * Time.deltaTime);
         }
-        else
+        else //air movement
         {
             rb.AddForce(((transform.right * moveDir.x) + (transform.forward * moveDir.z)) * airMultiplier * 8000 * Time.deltaTime);
             rb.AddForce(-transform.up * gravityForce * Time.deltaTime);
@@ -93,7 +102,7 @@ public class Player : NetworkBehaviour
         }
     }
 
-    private void SpeedControl()
+    private void SpeedControl() //makes sure we dont get too fast
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
@@ -127,6 +136,7 @@ public class Player : NetworkBehaviour
             pauseMenu.SetActive(!pauseMenu.activeSelf);
             stopInput = !stopInput;
             Cursor.visible = !Cursor.visible;
+            SetStopMovement(false);
         }
     }
     public void Jump(InputAction.CallbackContext context)
@@ -149,6 +159,7 @@ public class Player : NetworkBehaviour
             if (!(oldLookDir.y * -1 * sensitivity > 90 || oldLookDir.y * -1 * sensitivity < -90))
             {
                 head.transform.rotation = Quaternion.Euler(oldLookDir.y * -1 * sensitivity, oldLookDir.x * sensitivity, oldLookDir.z * sensitivity); //this rotates the cameras y, this is so the Y look direction has no affect on move direction 
+                //gun.transform.rotation = Quaternion.Euler(oldLookDir.y * -1 * sensitivity, oldLookDir.x * sensitivity, oldLookDir.z * sensitivity); 
             }
 
         }

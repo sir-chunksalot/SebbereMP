@@ -57,9 +57,9 @@ public class Bullet : NetworkBehaviour
     [ServerRpc]
     private void ExplosionSpawnServerRPC(Vector3 spawnPos) 
     {
-        GameObject shot = Instantiate(explosion, spawnPos, Quaternion.identity);
+        GameObject boom = Instantiate(explosion, spawnPos, Quaternion.identity);
 
-        shot.GetComponent<NetworkObject>().Spawn();
+        boom.GetComponent<NetworkObject>().Spawn();
 
         //destroys bullet after explosion is spawned
         DestroyGameObjectServerRPC();
