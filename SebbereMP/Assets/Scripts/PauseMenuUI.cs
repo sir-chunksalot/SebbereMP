@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,7 +33,7 @@ public class PauseMenuUI : MonoBehaviour
     }
     public void UpdateSliderSens() //if player uses text box it changes the slider
     {
-        if(sensText.text != "")
+        if (sensText.text != "")
         {
             sensSlider.value = float.Parse(sensText.text);
         }

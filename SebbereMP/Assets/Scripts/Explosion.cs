@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -15,7 +13,7 @@ public class Explosion : NetworkBehaviour
 
     private void Update()
     {
-        
+
     }
 
     private IEnumerator Boom()

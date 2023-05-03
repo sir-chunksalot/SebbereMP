@@ -1037,6 +1037,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &627487117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 627487118}
+  m_Layer: 8
+  m_Name: GrapplerShootPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &627487118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627487117}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.502}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4347122960168190441}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &723836541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1861,7 +1892,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4055
+    m_Bits: 8151
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1905,7 +1936,7 @@ GameObject:
   - component: {fileID: 3469287838379966552}
   - component: {fileID: 1711813854317016210}
   - component: {fileID: 1005635074}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bazooka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2029,7 +2060,8 @@ Transform:
   m_LocalPosition: {x: -0.912, y: -0.43, z: 0.38}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 627487118}
   m_Father: {fileID: 1989665053009134366}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2108,9 +2140,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b355bcee0f4daf45a893df0e0d79114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGrappleDistance: 100
+  maxGrappleDistance: 60
+  maxGrappleSpeed: 30
+  hookShotSpeed: 60
+  aceleration: 3
   player: {fileID: 4277175109720815279}
   shootPos: {fileID: 2023453870}
+  grappler: {fileID: 627487117}
+  hook: {fileID: 1412819975581914375, guid: 9b82cb64725ec61439991f9f4076f030, type: 3}
 --- !u!120 &1600812352
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2162,14 +2199,32 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.98038864
-        value: 0.07964516
+        time: 0.02726924
+        value: 0.09749685
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.52647495
+        value: 0.10713959
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0.089279175
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

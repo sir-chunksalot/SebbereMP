@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MagazineUI : MonoBehaviour
-{ 
+{
     [SerializeField] GameObject bulletUI;
     public void AddBullet()
     {

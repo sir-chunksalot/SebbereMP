@@ -1,5 +1,4 @@
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,10 +46,12 @@ public class Player : NetworkBehaviour
         SpeedControl();
         //grounded = Physics.Raycast(transform.position, Vector3.down, (playerHeight * .5f) + .2f, groundLayermask);
         Collider[] collider = Physics.OverlapSphere(groundCheck.gameObject.transform.position, groundCheckRadius, groundLayermask);
-        if (collider.Length >= 1) {
+        if (collider.Length >= 1)
+        {
             grounded = true;
         }
-        else {
+        else
+        {
             grounded = false;
         }
         if (grounded) //sets friction when we arent in the air
@@ -71,7 +72,7 @@ public class Player : NetworkBehaviour
 
     public void SetSensitivity(float newSens)
     {
-        sensitivity = newSens/100; //sens values in the menus are whole numbers because it looks nicer
+        sensitivity = newSens / 100; //sens values in the menus are whole numbers because it looks nicer
     }
 
     public float GetSensitivity()
@@ -131,7 +132,7 @@ public class Player : NetworkBehaviour
 
     public void Pause(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
             pauseMenu.SetActive(!pauseMenu.activeSelf);
             stopInput = !stopInput;

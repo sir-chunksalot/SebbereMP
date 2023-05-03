@@ -46,7 +46,7 @@ public class Bullet : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.tag);
-        if(!(other.gameObject.tag == "Player" && other.gameObject.GetComponent<NetworkObject>().IsLocalPlayer))
+        if (!(other.gameObject.tag == "Player" && other.gameObject.GetComponent<NetworkObject>().IsLocalPlayer))
         {
             Debug.Log("fartsyas");
             ExplosionSpawnServerRPC(gameObject.transform.position);
@@ -55,7 +55,7 @@ public class Bullet : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void ExplosionSpawnServerRPC(Vector3 spawnPos) 
+    private void ExplosionSpawnServerRPC(Vector3 spawnPos)
     {
         GameObject boom = Instantiate(explosion, spawnPos, Quaternion.identity);
 

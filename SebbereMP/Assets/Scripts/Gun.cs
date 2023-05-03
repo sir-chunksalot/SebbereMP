@@ -1,14 +1,8 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Numerics;
-using System.Security.Cryptography;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Networking.Types;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using Quaternion = UnityEngine.Quaternion;
 
 public class Gun : NetworkBehaviour
@@ -37,7 +31,7 @@ public class Gun : NetworkBehaviour
         {
             player.GetComponent<Rigidbody>().AddForce((transform.right) * 500); //pushes player back
             float spawnTime = Time.fixedTime;
-            ShootServerRpc(head.transform.position + (1.2f * head.transform.forward) , head.transform.rotation, spawnTime);
+            ShootServerRpc(head.transform.position + (1.2f * head.transform.forward), head.transform.rotation);
             Debug.Log("gun owner client id is: " + OwnerClientId);
 
             ammo--;
@@ -63,7 +57,7 @@ public class Gun : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void ShootServerRpc(UnityEngine.Vector3 spawnPos, UnityEngine.Quaternion rot, float spawnTime) //i had to do this unity engine bullshit to clarify which one i was talking about. lil unity got confused uwu
+    private void ShootServerRpc(UnityEngine.Vector3 spawnPos, Quaternion rot) //i had to do this unity engine bullshit to clarify which one i was talking about. lil unity got confused uwu
     {
         GameObject shot = Instantiate(bullet, spawnPos, rot);
 

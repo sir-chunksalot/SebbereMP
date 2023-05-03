@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Threading.Tasks;
-using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
@@ -11,11 +10,10 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TestingNetcodeUI : MonoBehaviour
 {
-    string joinCode;    
+    string joinCode;
     private async void Awake()
     {
         await UnityServices.InitializeAsync();
@@ -65,36 +63,36 @@ public class TestingNetcodeUI : MonoBehaviour
         }
     }
 
-        //private void Start()
-        //{
-        //    hostButton.onClick.AddListener(async () =>
-        //    {
-        //        Debug.Log("host");
-        //        joinCode = await CreateRelay();
-        //        Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(joinCode, 8);
+    //private void Start()
+    //{
+    //    hostButton.onClick.AddListener(async () =>
+    //    {
+    //        Debug.Log("host");
+    //        joinCode = await CreateRelay();
+    //        Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(joinCode, 8);
 
-        //        Debug.Log(joinCode + "join code");
-        //        //Hide();
-        //    });
-        //    clientButton.onClick.AddListener(async () =>
-        //    {
-        //        Debug.Log("client");
-        //        QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync();
+    //        Debug.Log(joinCode + "join code");
+    //        //Hide();
+    //    });
+    //    clientButton.onClick.AddListener(async () =>
+    //    {
+    //        Debug.Log("client");
+    //        QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync();
 
-        //        //await Lobbies.Instance.JoinLobbyByIdAsync(queryResponse.Results[0].Id);
-        //        Debug.Log(joinCode + "join code");
-        //        Debug.Log(queryResponse.Results[0].Name + "lobby code");
-        //        JoinRelay(queryResponse.Results[0].Name);
-        //        //Hide();
-        //    });
-        //}
+    //        //await Lobbies.Instance.JoinLobbyByIdAsync(queryResponse.Results[0].Id);
+    //        Debug.Log(joinCode + "join code");
+    //        Debug.Log(queryResponse.Results[0].Name + "lobby code");
+    //        JoinRelay(queryResponse.Results[0].Name);
+    //        //Hide();
+    //    });
+    //}
 
-        //private void Hide()
-        //{
-        //    gameObject.SetActive(false);
-        //}
+    //private void Hide()
+    //{
+    //    gameObject.SetActive(false);
+    //}
 
-        private async Task<QueryResponse> UpdateLobbyList()
+    private async Task<QueryResponse> UpdateLobbyList()
     {
         QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync();
 
