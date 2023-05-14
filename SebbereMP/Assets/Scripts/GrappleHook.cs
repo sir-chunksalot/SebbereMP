@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 public class GrappleHook : NetworkBehaviour
@@ -19,6 +21,7 @@ public class GrappleHook : NetworkBehaviour
     private bool pulling;
     private bool hookyState;
     private Vector3 targetPos;
+    private Vector3 originalVel;
     private Hook hookScript;
 
     void Start()
@@ -43,7 +46,6 @@ public class GrappleHook : NetworkBehaviour
                 if (!hookyState)
                 {
                     GrappleShotServerRPC(); //spawns hook
-                    hookyState = true;
                 }
             }
             
@@ -60,8 +62,9 @@ public class GrappleHook : NetworkBehaviour
         rope.SetPosition(0, grappler.transform.position);
         rope.SetPosition(1, hooky.transform.position);
 
-        //playerRB.useGravity = false;
         playerRB.drag = 0;
+        originalVel = playerRB.velocity;
+        //playerRB.useGravity = false;
         pulling = true;
         Debug.Log("pull");
 
@@ -71,11 +74,18 @@ public class GrappleHook : NetworkBehaviour
     {
         if (pulling)
         {
-            if(player.GetComponent<Rigidbody>().velocity.magnitude < maxGrappleSpeed)
+            //if (player.GetComponent<Rigidbody>().velocity.magnitude < maxGrappleSpeed)
+            //{
+            //    playerRB.velocity += (hooky.transform.position - player.transform.position).normalized * aceleration; //constantly sets the velocity to go towards the target
+            //}
+            // playerRB.velocity -= playerRB.velocity.normalized / (aceleration/2);
+            if (player.GetComponent<Rigidbody>().velocity.magnitude < maxGrappleSpeed)
             {
-               playerRB.velocity += (hooky.transform.position - player.transform.position).normalized * aceleration; //constantly sets the velocity to go towards the target
+                playerRB.velocity += (hooky.transform.position - player.transform.position).normalized * aceleration; //constantly sets the velocity to go towards the target
+                playerRB.velocity += originalVel.normalized * .3f;
             }
-             playerRB.velocity -= playerRB.velocity.normalized / (aceleration/2);
+            playerRB.velocity += (playerRB.velocity * -1).normalized;
+
 
             rope.SetPosition(0, grappler.transform.position); //updates the grapples origin point as the player moves forward
             if ((rope.GetPosition(0) - rope.GetPosition(1)).magnitude < new Vector3(1.5f, 1.5f, 1.5f).magnitude) //if the grapples origin point gets close enough to its end point, disconnect grapple
@@ -89,7 +99,7 @@ public class GrappleHook : NetworkBehaviour
 
     private void Update() //updates script function based on current hook status
     {
-        if (hookyState && !pulling)
+        if (hookyState && !pulling && IsOwner)
         {
             rope.SetPosition(0, grappler.transform.position);
             rope.SetPosition(1, hooky.transform.position);
@@ -107,8 +117,17 @@ public class GrappleHook : NetworkBehaviour
 
     private void DisconnectGrapple()
     {
-        DestroyHookServerRPC();
         hookyState = false;
+        
+        if(IsServer)
+        {
+            DestroyHook();
+        }
+        else
+        {
+            DestroyHookServerRPC();
+        }
+
         player.GetComponent<Player>().SetStopMovement(false);
         playerRB.useGravity = true;
         rope.SetPosition(0, rope.GetPosition(1));
@@ -116,21 +135,51 @@ public class GrappleHook : NetworkBehaviour
         Debug.Log("disconnected");
     }
 
-    [ServerRpc]
-    private void GrappleShotServerRPC()
+    [ClientRpc]
+    private void FindHookClientRPC()
     {
-        hooky = Instantiate(hook, grappler.transform.position, gameObject.transform.rotation);
+        Debug.Log("cumfart");
+        //if (!IsOwner) { return; }
+        GameObject[] hooksInScene = GameObject.FindGameObjectsWithTag("Hook");
+        for (int i = 0; i < hooksInScene.Length; i++)
+        {
+            if (hooksInScene[i].GetComponent<NetworkObject>().OwnerClientId == player.gameObject.GetComponent<NetworkObject>().OwnerClientId)
+            {
+                hooky = hooksInScene[i];
+                hooky.GetComponent<Rigidbody>().velocity = shootPos.transform.forward * hookShotSpeed;
+                hookScript = hooksInScene[i].GetComponent<Hook>();
+                i = hooksInScene.Length;
+                hookyState = true;
+            }
+        }
 
-        hooky.GetComponent<NetworkObject>().Spawn();
-
-        hooky.GetComponent<Rigidbody>().velocity = shootPos.transform.forward * hookShotSpeed;
-
-        hookScript = hooky.GetComponent<Hook>();
+        Debug.Log("fart");
     }
 
     [ServerRpc]
+    private void GrappleShotServerRPC()
+    {
+        GameObject hooky = Instantiate(hook, grappler.transform.position, gameObject.transform.rotation);
+        //i had to split them up because the server cant assign variables in the clients scripts
+        hooky.GetComponent<NetworkObject>().Spawn();
+        hooky.GetComponent<NetworkObject>().ChangeOwnership(OwnerClientId);
+
+
+
+        FindHookClientRPC();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
     private void DestroyHookServerRPC()
     {
-        Destroy(hooky);
+        Debug.Log("loopy chun");
+        DestroyHook();
+    }
+
+    private void DestroyHook()
+    {
+        Debug.Log("finn huma");
+        hooky.GetComponent<NetworkObject>().Despawn();
+        Debug.Log("ja dog");
     }
 }

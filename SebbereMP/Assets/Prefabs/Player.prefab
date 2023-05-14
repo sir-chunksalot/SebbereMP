@@ -2141,7 +2141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxGrappleDistance: 60
-  maxGrappleSpeed: 30
+  maxGrappleSpeed: 40
   hookShotSpeed: 60
   aceleration: 3
   player: {fileID: 4277175109720815279}
@@ -2403,7 +2403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   jumpForce: 14
-  airMultiplier: 0.3
+  airMultiplier: 0.7
   gravityForce: 250
   sensitivity: 0.25
   head: {fileID: 7940028646988808559}

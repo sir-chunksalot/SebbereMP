@@ -142,6 +142,7 @@ public class Player : NetworkBehaviour
     }
     public void Jump(InputAction.CallbackContext context)
     {
+        if (stopMovement) return;
         if (context.performed && grounded)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
